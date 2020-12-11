@@ -14,7 +14,7 @@ import javax.swing.*;
 
 public class MainFrame extends JFrame {
     // Константы с исходным размером окна приложения
-    private static final int WIDTH = 700;
+    private static final int WIDTH = 800;
     private static final int HEIGHT = 500;
     // Массив коэффициентов многочлена
     private Double[] coefficients;
@@ -201,57 +201,53 @@ public class MainFrame extends JFrame {
 // Создать кнопку "Вычислить"
         JButton buttonCalc = new JButton("Вычислить");
 // Задать действие на нажатие "Вычислить" и привязать к кнопке
-        buttonCalc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-                try {
+        buttonCalc.addActionListener(ev -> {
+            try {
 // Считать значения начала и конца отрезка, шага
-                    Double from = Double.parseDouble(textFieldFrom.getText());
-                    Double to = Double.parseDouble(textFieldTo.getText());
-                    Double step = Double.parseDouble(textFieldStep.getText());
+                Double from = Double.parseDouble(textFieldFrom.getText());
+                Double to = Double.parseDouble(textFieldTo.getText());
+                Double step = Double.parseDouble(textFieldStep.getText());
 // На основе считанных данных создать новыйэкземпляр модели таблицы
-                    data = new GornerTableModel(from, to, step, MainFrame.this.coefficients);
+                data = new GornerTableModel(from, to, step, MainFrame.this.coefficients);
 // Создать новый экземпляр таблицы
-                    JTable table = new JTable(data);
+                JTable table = new JTable(data);
 // Установить в качестве визуализатора ячеек длякласса Double разработанный визуализатор
-                    table.setDefaultRenderer(Double.class, renderer);
+                table.setDefaultRenderer(Double.class, renderer);
 // Установить размер строки таблицы в 30пикселов
-                    table.setRowHeight(30);
+                table.setRowHeight(30);
 // Удалить все вложенные элементы из контейнера
-                    hBoxResult.removeAll();
+                hBoxResult.removeAll();
 // Добавить в hBoxResult таблицу, "обѐрнутую" впанель с полосами прокрутки
-                    hBoxResult.add(new JScrollPane(table));
+                hBoxResult.add(new JScrollPane(table));
 // Обновить область содержания главного окна
-                    getContentPane().validate();
+                getContentPane().validate();
 // Пометить ряд элементов меню как доступных
-                    saveToTextMenuItem.setEnabled(true);
-                    saveToGraphicsMenuItem.setEnabled(true);
-                    searchValueMenuItem.setEnabled(true);
-                } catch (NumberFormatException ex) {
+                saveToTextMenuItem.setEnabled(true);
+                saveToGraphicsMenuItem.setEnabled(true);
+                searchValueMenuItem.setEnabled(true);
+            } catch (NumberFormatException ex) {
 // В случае ошибки преобразования чисел показатьсообщение об ошибке
-                    JOptionPane.showMessageDialog(MainFrame.this, "Ошибка в формате записи числа с плавающей точкой", "Ошибочный формат числа", JOptionPane.WARNING_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(MainFrame.this, "Ошибка в формате записи числа с плавающей точкой", "Ошибочный формат числа", JOptionPane.WARNING_MESSAGE);
             }
         });
 // Создать кнопку "Очистить поля"
         JButton buttonReset = new JButton("Очистить поля");
 // Задать действие на нажатие "Очистить поля" и привязать к кнопке
-        buttonReset.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
+        buttonReset.addActionListener(ev -> {
 // Установить в полях ввода значения по умолчанию
-                textFieldFrom.setText("0.0");
-                textFieldTo.setText("1.0");
-                textFieldStep.setText("0.1");
+            textFieldFrom.setText("0.0");
+            textFieldTo.setText("1.0");
+            textFieldStep.setText("0.1");
 // Удалить все вложенные элементы контейнера
-                hBoxResult.removeAll();
+            hBoxResult.removeAll();
 // Добавить в контейнер пустую панель
-                hBoxResult.add(new JPanel());
+            hBoxResult.add(new JPanel());
 // Пометить элементы меню как недоступные
-                saveToTextMenuItem.setEnabled(false);
-                saveToGraphicsMenuItem.setEnabled(false);
-                searchValueMenuItem.setEnabled(false);
+            saveToTextMenuItem.setEnabled(false);
+            saveToGraphicsMenuItem.setEnabled(false);
+            searchValueMenuItem.setEnabled(false);
 // Обновить область содержания главного окна
-                getContentPane().validate();
-            }
+            getContentPane().validate();
         });
 // Поместить созданные кнопки в контейнер
         Box hboxButtons = Box.createHorizontalBox();
